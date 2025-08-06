@@ -9,7 +9,7 @@ const loadLogin = (req, res) => {
 const Login = async (req, res) => {
     try {
         const { name, password } = req.body
-        const admin = await adminModel.findOne({ name })
+        const admin = await adminModel.findOne({name})
         if (!admin) {
             return res.render('admin/login', { message: 'invalid Credentials' })
         }
