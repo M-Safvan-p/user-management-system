@@ -37,14 +37,12 @@ const loadDashboard = async (req, res) => {
 }
 
 const editUser = async (req, res) => {
-
     try {
-
         const userId = req.params.id;
         const { name, email, password } = req.body;
 
-
         const updateData = { name, email };
+
         if (password && password.trim() !== '') {
             const hashed = await bcrypt.hash(password, 10);
             updateData.password = hashed;
@@ -53,30 +51,19 @@ const editUser = async (req, res) => {
         await userModel.findByIdAndUpdate(userId, updateData);
         res.redirect('/admin/dashboard');
     } catch (err) {
-
         res.status(500).send('Something went wrong');
     }
 };
 
 const deleteUser = async (req, res) => {
+    const userId = req.params.id;
     try {
-        const userId = req.params.id;
-
-        const deletedUser = await userModel.findByIdAndDelete(userId);
-
-        if (!deletedUser) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-        req.session.user = null;    
-        res.status(200).json({ success: true, message: "User deleted successfully" });
+        await userModel.findByIdAndDelete(userId);
+        res.json({success: true});
     } catch (err) {
-        console.error("Delete user failed:", err);
-        res.status(500).json({ success: false, message: "Internal server error" });
+        res.json({success: false, message: "Failed to delete user"});
     }
 };
-
-
-
 
 const addUser = async (req, res) => {
     try {
@@ -90,18 +77,13 @@ const addUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).send("User already exists with this email");
         }
-
         const hashedPassword = await bcrypt.hash(password, 10);
-
         const newUser = new userModel({
             name,
             email,
             password: hashedPassword,
         });
-
         await newUser.save();
-
-        // Redirect back to dashboard
         res.redirect('/admin/dashboard');
     } catch (err) {
         console.error('Add user failed:', err);
@@ -110,16 +92,13 @@ const addUser = async (req, res) => {
 };
 
 const logout = async (req,res) =>{
-
     req.session.admin = null;
     res.redirect('/admin/login')
 }
 
 const searchUser = async (req,res)=>{
     try {
-        
         const searchQuery = req.body.search.trim();
-
         const users = await userModel.find({
             $or:[
                 {name:{$regex:searchQuery,$options:'i'}},
@@ -129,8 +108,7 @@ const searchUser = async (req,res)=>{
 
         res.render('admin/dashboard',{users});
 
-    } catch (error) {
-        
+    } catch (error) { 
         console.error("Search User Error :",error);
         res.status(500).render('admin/dashboard',{mgs:"Error while searching user"});
     }

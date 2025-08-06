@@ -81,7 +81,7 @@
             </div>
         </form>
 
-        <!-- Users Table -->
+        <!-- Table-->
         <table class="table table-bordered text-center bg-white shadow-sm">
             <thead class="table-header">
                 <tr>
@@ -98,34 +98,34 @@
                     <td>{{this.name}}</td>
                     <td>{{this.email}}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#editModal{{this._id}}">Edit</button>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{this._id}}">Edit</button>
+
                         <button class="btn btn-danger btn-sm delete-btn" data-id="{{this._id}}">Delete</button>
                     </td>
                 </tr>
-
                 <!-- Edit Modal -->
                 <div class="modal fade" id="editModal{{this._id}}" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
+
                             <form action="/admin/edit/{{this._id}}" method="post">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Edit User</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="text" name="name" value="{{this.name}}" class="form-control mb-2"
-                                        placeholder="Name" />
-                                    <input type="email" name="email" value="{{this.email}}" class="form-control mb-2"
-                                        placeholder="Email" />
-                                    <input type="password" name="password" placeholder="New password"
-                                        class="form-control" />
+                                    <input type="text" name="name" value="{{this.name}}" class="form-control mb-2" placeholder="Name" />
+
+                                    <input type="email" name="email" value="{{this.email}}" class="form-control mb-2" placeholder="Email" />
+
+                                    <input type="password" name="password" placeholder="New password" class="form-control" />
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-success">Save Changes</button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -134,15 +134,14 @@
         </table>
     </div>
 
-    <!-- Delete Script -->
+    <!-- Delete-->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const deleteButtons = document.querySelectorAll(".delete-btn");
-
             deleteButtons.forEach(button => {
                 button.addEventListener("click", async () => {
-                    const userId = button.getAttribute("data-id");
 
+                    const userId = button.getAttribute("data-id");
                     const result = await Swal.fire({
                         title: "Are you sure?",
                         text: "This user will be deleted permanently!",
@@ -174,8 +173,7 @@
             });
         });
     </script>
-
-    <!-- Form Validation -->
+    <!-- Validation -->
     <script>
         document.querySelector('form[action="/admin/add"]').addEventListener("submit", function (e) {
             const name = this.querySelector('input[name="name"]').value.trim();
@@ -189,7 +187,6 @@
             }
         });
     </script>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
