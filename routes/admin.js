@@ -15,7 +15,7 @@ router.delete('/delete/:id',adminAuth.checkSession,adminController.deleteUser)
 
 router.post("/add",adminAuth.checkSession,adminController.addUser)
 
-router.get('/logout',adminAuth.checkSession,adminController.logout)
+router.post('/logout',adminAuth.checkSession,adminController.logout)
 
 router.post("/searchUser",adminAuth.checkSession,adminController.searchUser)
 
