@@ -1,6 +1,7 @@
 <head>
     <link rel="stylesheet" href="/style/userhome.css">
 </head>
+
 <body>
     <div class="header">
         <h1 class="username">Hello, {{username}}!</h1>
@@ -19,13 +20,9 @@
 
         </div>
     </div>
-    <div class="footer">
-        <a href="/user/logout" class="logout-btn">Logout</a>
+    <div class="logout-container">
+        <form action="/user/logout" method="POST">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
     </div>
 </body>
-{{!-- <script>
-    const logoutBtn = document.getElementsByClassName("logout-btn");
-    logoutBtn.addEventListener("click",()=>{
-        window.location.href="/user/logout";
-    })
-</script> --}}

@@ -11,7 +11,7 @@ router.post('/register',userController.registerUser)
 
 router.get('/home',auth.checkSession,userController.loadHome)
 
-router.get('/logout',auth.checkSession,userController.logout)
+router.post('/logout',auth.checkSession,userController.logout)
 
 
 module.exports =router

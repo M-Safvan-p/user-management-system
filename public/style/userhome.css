@@ -88,6 +88,12 @@ body {
     padding-bottom: 20px;
 }
 
+.logout-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
 .logout-btn {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
