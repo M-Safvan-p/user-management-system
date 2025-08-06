@@ -82,21 +82,17 @@ const addUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        // Check for missing fields
         if (!name || !email || !password) {
             return res.status(400).send("All fields are required");
         }
 
-        // Check if user already exists
         const existingUser = await userModel.findOne({ email });
         if (existingUser) {
             return res.status(409).send("User already exists with this email");
         }
 
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create new user
         const newUser = new userModel({
             name,
             email,
@@ -112,11 +108,13 @@ const addUser = async (req, res) => {
         res.status(500).send('Something went wrong while adding user');
     }
 };
+
 const logout = async (req,res) =>{
 
     req.session.admin = null;
     res.redirect('/admin/login')
 }
+
 const searchUser = async (req,res)=>{
     try {
         
@@ -124,7 +122,7 @@ const searchUser = async (req,res)=>{
 
         const users = await userModel.find({
             $or:[
-                {username:{$regex:searchQuery,$options:'i'}},
+                {name:{$regex:searchQuery,$options:'i'}},
                 {email:{$regex:searchQuery,$options:'i'}}
             ]
         });
