@@ -1,0 +1,31 @@
+<head>
+    <link rel="stylesheet" href="/style/userhome.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="username">Hello, {{username}}!</h1>
+        <p class="welcome-text">Welcome to your dashboard</p>
+    </div>
+    <div class="main-content">
+        <div class="quotes-container">
+            <div class="quote">
+                <div class="quote-text">"The only way to do great work is to love what you do."</div>
+                <div class="quote-author">— Steve Jobs</div>
+            </div>
+            <div class="quote">
+                <div class="quote-text">"Innovation distinguishes between a leader and a follower."</div>
+                <div class="quote-author">— Steve Jobs</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="footer">
+        <a href="/user/logout" class="logout-btn">Logout</a>
+    </div>
+</body>
+{{!-- <script>
+    const logoutBtn = document.getElementsByClassName("logout-btn");
+    logoutBtn.addEventListener("click",()=>{
+        window.location.href="/user/logout";
+    })
+</script> --}}

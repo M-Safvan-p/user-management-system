@@ -1,0 +1,64 @@
+<head>
+    <link rel="stylesheet" href="/style/adminlogin.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <div class="admin-icon">⚡</div>
+            <h2>Admin Portal</h2>
+            <p class="admin-subtitle">Secure Administrative Access</p>
+        </div>
+
+        <form action="/admin/login" method="POST" onsubmit="return validateAdminForm()">
+            <div class="form-group">
+                <label for="username">Administrator Username</label>
+                <input type="text" id="username" name="username" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password">
+            </div>
+            <button type="submit" class="submit-btn">Access Dashboard</button>
+        </form>
+
+        <div class="links">
+            <a href="/user/login">← Back to User Login</a>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Admin Panel | All access attempts are logged</p>
+        </div>
+    </div>
+
+    <!-- SweetAlert script -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- Form Validation Script -->
+    <script>
+        function validateAdminForm() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!username || !password) {
+                swal("Please enter both username and password.");
+                return false;
+            }
+
+            if (username.length < 4) {
+                swal("Username must be at least 4 characters.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+    <!-- Server-side Message Display -->
+    <script>
+        const message = "{{message}}";
+        if (message && message !== "undefined") {
+            swal(message);
+        }
+    </script>
+</body>
