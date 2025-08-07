@@ -81,7 +81,9 @@ const logout = (req, res) => {
 
 const details = (req,res)=>{
   const {name , email} =req.session.user;
-  res.send(name+email)
+  // res.send(name+email)
+  // res.send("<p>"+name+" "+email+"</p>")
+  res.render("user/details",{name:name,email:email})
 }
 
 module.exports = {
