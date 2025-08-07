@@ -13,5 +13,7 @@ router.get('/home',auth.checkSession,userController.loadHome)
 
 router.post('/logout',auth.checkSession,userController.logout)
 
+router.get('/details',auth.checkSession,userController.details)
+
 
 module.exports =router

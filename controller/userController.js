@@ -79,6 +79,11 @@ const logout = (req, res) => {
   res.redirect('/user/login')
 }
 
+const details = (req,res)=>{
+  const {name , email} =req.session.user;
+  res.send(name+email)
+}
+
 module.exports = {
   registerUser,
   loadRegister,
@@ -86,5 +91,6 @@ module.exports = {
   login,
   loadHome,
   logout,
-  homeValidate
+  homeValidate,
+  details
 }
