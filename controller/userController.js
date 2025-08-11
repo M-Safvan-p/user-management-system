@@ -96,3 +96,4 @@ module.exports = {
   homeValidate,
   details
 }
+
