@@ -62,7 +62,7 @@
         <form class="d-flex mb-3" name="keyword" action="/admin/searchUser" method="POST">
 
             <input type="text" name="search" id="searchInput" class="form-control me-2" placeholder="Search by name" />
-            
+
             <button class="btn btn-outline-primary me-2" type="submit">Search</button>
             <a href="/admin/dashboard" class="btn btn-outline-secondary">Clear</a>
         </form>
@@ -100,7 +100,8 @@
                     <td>{{this.name}}</td>
                     <td>{{this.email}}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{this._id}}">Edit</button>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editModal{{this._id}}">Edit</button>
 
                         <button class="btn btn-danger btn-sm delete-btn" data-id="{{this._id}}">Delete</button>
                     </td>
@@ -116,11 +117,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="text" name="name" value="{{this.name}}" class="form-control mb-2" placeholder="Name" />
+                                    <input type="text" name="name" value="{{this.name}}" class="form-control mb-2"
+                                        placeholder="Name" />
 
-                                    <input type="email" name="email" value="{{this.email}}" class="form-control mb-2" placeholder="Email" />
+                                    <input type="email" name="email" value="{{this.email}}" class="form-control mb-2"
+                                        placeholder="Email" />
 
-                                    <input type="password" name="password" placeholder="New password" class="form-control" />
+                                    <input type="password" name="password" placeholder="New password"
+                                        class="form-control" />
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -138,7 +142,7 @@
 
     <!-- Delete-->
     <script>
-       document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const deleteButtons = document.querySelectorAll(".delete-btn");
             deleteButtons.forEach(button => {
                 button.addEventListener("click", async () => {
@@ -156,36 +160,60 @@
 
                     if (result.isConfirmed) {
                         try {
-                            const response = await fetch(`/admin/delete/${userId}`, { method: "DELETE" });
+                            const response = await fetch(`/admin/delete/${userId}`, {
+                                method: "DELETE",
+                            });
+
                             const data = await response.json();
 
                             if (data.success) {
-                                Swal.fire("Deleted!", "User has been deleted.", "success");
-                                const row = button.closest("tr");
-                                row.remove();
+                                Swal.fire("Deleted!", "User has been deleted.", "success").then(() => {
+                                    window.location.reload();
+                                });
                             } else {
-                                Swal.fire("Error!", data.message || "Delete failed.", "error");
+                                Swal.fire("Error!", data.message || "Failed to delete user.", "error");
                             }
-                        } catch (error) {
-                            console.error(error);
+                        } catch (err) {
+                            console.error(err);
                             Swal.fire("Error!", "Something went wrong.", "error");
                         }
                     }
                 });
-            }); 
+            });
         });
     </script>
-    <!-- Validation -->
+    <!-- Validation and Add User -->
     <script>
-        document.querySelector('form[action="/admin/add"]').addEventListener("submit", function (e) {
+        document.querySelector('form[action="/admin/add"]').addEventListener("submit", async function (e) {
+            e.preventDefault();
             const name = this.querySelector('input[name="name"]').value.trim();
             const email = this.querySelector('input[name="email"]').value.trim();
             const password = this.querySelector('input[name="password"]').value.trim();
 
             if (!name || !email || !password) {
-                e.preventDefault();
                 Swal.fire("Missing Fields", "All fields are required.", "warning");
                 return;
+            }
+
+            try {
+                const response = await fetch("/admin/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    Swal.fire("Success!", data.message, "success").then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire("Error!", data.message || "Failed to add user.", "error");
+                }
+            } catch (err) {
+                console.error(err);
+                Swal.fire("Error!", "Something went wrong.", "error");
             }
         });
     </script>
